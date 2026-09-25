@@ -11,3 +11,5 @@ Encoding: UTF-8
 
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
+
+ProjectName: STA9750-2026-FALL.Rproj
