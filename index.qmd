@@ -1,0 +1,21 @@
+---
+title: "About Me"
+---
+
+Hi! I’m Pratistha Regmi, a Business Analytics master’s student at Baruch College. This website will hold my projects for STA 9750.
+
+## Main Character Energy 
+
+```{r}
+#| echo: false
+#| results: asis
+
+vibes <- c(
+  "📚 **The Plot Detective:** You will overanalyze one fictional character today—and be right.",
+  "📊 **The Data Heroine:** One confusing problem is about to make sense.",
+  "🎬 **The Dramatic Lead:** Today's minor inconvenience deserves a full movie soundtrack.",
+  "☕ **The Comeback Era:** Take a breath. Your next chapter is looking good."
+)
+
+cat(sample(vibes, 1))
+```
