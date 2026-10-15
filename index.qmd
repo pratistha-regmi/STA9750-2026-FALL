@@ -6,30 +6,39 @@ title: "About Me"
 
 Hi, I’m Pratistha Regmi! I’m a Business Analytics master’s student at Baruch College, and I enjoy finding the story behind the numbers. My background in business and event operations taught me to ask practical questions; now I’m learning how to answer them with data. This site is where I’ll share my STA 9750 projects, what I discover along the way, and a little of my personality too.
 
-## My reading mood 📚
+## My current reading mood 📚
+
+I’m currently on the third book in the ACOTAR series, so fantasy and romance are definitely leading my reading mood right now, with a little mystery to keep things interesting! The chart below shows my personal rating for each genre out of 10.
 
 ```{r}
 #| echo: false
-#| fig-alt: "Bar chart of my personal reading preferences, rated out of ten."
+#| fig-alt: "Personal enjoyment ratings: fantasy nine, romance eight, and mystery seven out of ten."
 
-# Replace these example ratings with your own.
 reading_ratings <- c(
-  "Fantasy" = 9,
-  "Romance" = 8,
-  "Mystery" = 7
+  "Fantasy" = 5,
+  "Romance" = 10,
+  "Mystery" = 9
 )
 
-barplot(
+bar_positions <- barplot(
   reading_ratings,
   col = c("#9381B5", "#E8A0BF", "#78A6A3"),
   ylim = c(0, 10),
-  ylab = "My personal rating (out of 10)",
-  main = "What’s on my reading list?",
+  ylab = "My enjoyment (out of 10)",
+  main = "My current reading mood",
   sub = "Source: my own reading preferences",
   las = 1,
   border = NA
 )
+
+text(
+  x = bar_positions,
+  y = reading_ratings,
+  labels = reading_ratings,
+  pos = 3
+)
 ```
+
 
 ## My Mini-Projects
 
