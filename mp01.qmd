@@ -592,34 +592,11 @@ average_performance |>
 
 I noticed that pre-taped content had more watch hours on average than live events, with about 5.72 million hours compared to 3.56 million. The difference was even larger among the top-tier entries: pre-taped content averaged 39.14 million hours, while live events averaged 15.97 million. Based on this comparison, live events did not draw more watch time. However, longer content can build up more watch hours, and these numbers do not tell us how many people watched an event live.
 
----
-
-## Corporate Strategy Memo
-
-**To:** Netflix Leadership  
-**From:** Pratistha Regmi  
-**Subject:** Original Content Priorities for 2027 and Beyond
-
-For 2027 and beyond, I recommend that Netflix continue making series a priority, develop content that stays popular over time, and choose live events carefully. Big releases are important, but viewers also need a range of things to watch between new seasons. My analysis supports these priorities, although viewing hours alone cannot tell us which investments will earn the most money.
-
-### Keep shows a priority while continuing to invest in movies
-
-Shows made up `r scales::percent(watch_time_by_type |> filter(period == "2023H1", content_type == "Show") |> pull(share), accuracy = 0.01)` of reported watch hours in January–June 2023 and `r scales::percent(watch_time_by_type |> filter(period == "2026H1", content_type == "Show") |> pull(share), accuracy = 0.01)` in January–June 2026. As the chart shows, series accounted for most watch time in every period. Their share grew overall, with some small changes along the way.
-
-Based on this pattern, I recommend that Netflix continue developing original series with stories that can hold viewers’ interest across episodes. When deciding whether to renew a show, Netflix should consider whether people keep watching after the initial excitement fades. These reports show viewing over six-month periods, so more detailed viewing data would be needed to understand what happens immediately after a release.
-
-Movies should still be part of the plan. They accounted for `r scales::percent(watch_time_by_type |> filter(period == "2026H1", content_type == "Movie") |> pull(share), accuracy = 0.01)` of reported watch hours in the latest period, which is a meaningful share. Netflix should continue offering carefully chosen films for viewers who want a complete story in one sitting.
-
-However, the larger share of watch time for shows does not mean Netflix should divide its budget in the same proportions. A season usually contains more hours of content than a movie, giving it more opportunity to accumulate watch time. Netflix would also need to consider production costs and how each title helps attract and retain subscribers before making spending decisions.
-
 ```{r}
-#| label: fig-content-share
-#| echo: false
-#| fig-width: 9
-#| fig-height: 5
-#| fig-cap: "Approximate content categories based on title and runtime. Aggregate 'Other Shows' and 'Other Movies' rows are excluded."
+#| label: build-content-share
+#| echo: true
 
-watch_time_by_type |>
+content_share_plot <- watch_time_by_type |>
   mutate(
     period = factor(period, levels = sort(unique(period))),
     content_type = factor(
@@ -671,6 +648,36 @@ subtitle = "Shows versus movies across six-month reporting periods",
     axis.text.x = element_text(angle = 30, hjust = 1)
   )
 ```
+---
+
+## Corporate Strategy Memo
+
+**To:** Netflix Leadership  
+**From:** Pratistha Regmi  
+**Subject:** Original Content Priorities for 2027 and Beyond
+
+For 2027 and beyond, I recommend that Netflix continue making series a priority, develop content that stays popular over time, and choose live events carefully. Big releases are important, but viewers also need a range of things to watch between new seasons. My analysis supports these priorities, although viewing hours alone cannot tell us which investments will earn the most money.
+
+### Keep shows a priority while continuing to invest in movies
+
+Shows made up `r scales::percent(watch_time_by_type |> filter(period == "2023H1", content_type == "Show") |> pull(share), accuracy = 0.01)` of reported watch hours in January–June 2023 and `r scales::percent(watch_time_by_type |> filter(period == "2026H1", content_type == "Show") |> pull(share), accuracy = 0.01)` in January–June 2026. As the chart shows, series accounted for most watch time in every period. Their share grew overall, with some small changes along the way.
+
+Based on this pattern, I recommend that Netflix continue developing original series with stories that can hold viewers’ interest across episodes. When deciding whether to renew a show, Netflix should consider whether people keep watching after the initial excitement fades. These reports show viewing over six-month periods, so more detailed viewing data would be needed to understand what happens immediately after a release.
+
+Movies should still be part of the plan. They accounted for `r scales::percent(watch_time_by_type |> filter(period == "2026H1", content_type == "Movie") |> pull(share), accuracy = 0.01)` of reported watch hours in the latest period, which is a meaningful share. Netflix should continue offering carefully chosen films for viewers who want a complete story in one sitting.
+
+However, the larger share of watch time for shows does not mean Netflix should divide its budget in the same proportions. A season usually contains more hours of content than a movie, giving it more opportunity to accumulate watch time. Netflix would also need to consider production costs and how each title helps attract and retain subscribers before making spending decisions.
+
+```{r}
+#| label: fig-content-share
+#| echo: false
+#| fig-width: 9
+#| fig-height: 5
+#| fig-cap: "Approximate content categories based on title and runtime. Aggregate 'Other Shows' and 'Other Movies' rows are excluded."
+
+content_share_plot
+```
+
 ### Balance big releases with shows that stay popular
 
 Netflix should keep investing in major releases, but it should also pay attention to titles that attract viewers over time. Wednesday: Season 2 recorded `r scales::comma(top_titles |> filter(period == "2025H2") |> pull(title_hours) / 1e6, accuracy = 0.1)` million watch hours in July–December 2025. Even so, the top title in each period accounted for only `r scales::percent(min(top_titles$share), accuracy = 0.01)` to `r scales::percent(max(top_titles$share), accuracy = 0.01)` of reported watch hours. A successful release can make a substantial contribution, but Netflix needs more than one popular title to support overall viewing.
