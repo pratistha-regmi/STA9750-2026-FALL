@@ -592,6 +592,68 @@ average_performance |>
 
 I noticed that pre-taped content had more watch hours on average than live events, with about 5.72 million hours compared to 3.56 million. The difference was even larger among the top-tier entries: pre-taped content averaged 39.14 million hours, while live events averaged 15.97 million. Based on this comparison, live events did not draw more watch time. However, longer content can build up more watch hours, and these numbers do not tell us how many people watched an event live.
 
+
+## Extra Credit: Concentration of Viewing Time
+
+```{r}
+#| label: gini-analysis
+
+# Compute Gini using the formula in the assignment.
+gini_coefficient <- function(x) {
+  x <- sort(x[!is.na(x)])
+
+  if (length(x) == 0 || sum(x) == 0) {
+    return(NA_real_)
+  }
+
+  n <- length(x)
+
+  2 * sum(seq_along(x) * x) / (n * sum(x)) -
+    (n + 1) / n
+}
+
+# Combine entries for each title within each reporting period.
+gini_by_period <- NETFLIX_DATA |>
+  group_by(period, title) |>
+  summarize(
+    hours = sum(hours_viewed, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  group_by(period) |>
+  summarize(
+    gini = gini_coefficient(hours),
+    .groups = "drop"
+  ) |>
+  arrange(period)
+
+gini_by_period |>
+  gt::gt() |>
+  gt::tab_header(
+    title = "How Concentrated Was Netflix Viewing?",
+    subtitle = "Gini coefficient of watch hours across reported titles"
+  ) |>
+  gt::cols_label(
+    period = "Reporting Period",
+    gini = "Gini Coefficient"
+  ) |>
+  gt::fmt_number(
+    columns = gini,
+    decimals = 3
+  ) |>
+  gt::opt_row_striping() |>
+  gt::tab_source_note(
+    source_note = paste(
+      "Source: Netflix What We Watched reports.",
+      "Values closer to 0 indicate more even viewing;",
+      "values closer to 1 indicate greater concentration.",
+      "Uses watch hours without adjusting for runtime.",
+      "Seasons are separate titles. Aggregate 'Other Shows'",
+      "and 'Other Movies' rows are excluded.",
+      "Results describe reported titles, not the entire catalog."
+    )
+  )
+```
+
 ```{r}
 #| label: build-content-share
 #| echo: true
@@ -681,6 +743,8 @@ content_share_plot
 ### Balance big releases with shows that stay popular
 
 Netflix should keep investing in major releases, but it should also pay attention to titles that attract viewers over time. Wednesday: Season 2 recorded `r scales::comma(top_titles |> filter(period == "2025H2") |> pull(title_hours) / 1e6, accuracy = 0.1)` million watch hours in July–December 2025. Even so, the top title in each period accounted for only `r scales::percent(min(top_titles$share), accuracy = 0.01)` to `r scales::percent(max(top_titles$share), accuracy = 0.01)` of reported watch hours. A successful release can make a substantial contribution, but Netflix needs more than one popular title to support overall viewing.
+
+I also looked at how evenly watch time was spread across Netflix titles using the Gini coefficient. A value closer to 0 means viewing is more evenly spread, while a value closer to 1 means it is concentrated among fewer titles. The coefficient went from `r scales::number(gini_by_period |> filter(period == "2023H1") |> pull(gini), accuracy = 0.001)` in January–June 2023 to `r scales::number(gini_by_period |> filter(period == "2026H1") |> pull(gini), accuracy = 0.001)` in January–June 2026. Viewing became slightly more evenly spread overall, although the change was small and did not happen steadily. I used watch hours because I wanted to understand where viewers spent their time, but longer titles have more opportunity to build up those hours. For Netflix, this supports paying attention to strong-performing titles while also studying how the wider catalog contributes to viewing. These results alone cannot tell Netflix how to divide its budget.
 
 The consistently popular titles also stood out to me. Pablo Escobar: Season 1 attracted at least `r scales::comma(consistent_titles |> filter(str_detect(title, "^Pablo Escobar")) |> pull(minimum_hours) / 1e6, accuracy = 0.1)` million watch hours in every reporting period. This suggests that older content can continue contributing long after its release, although the data cannot tell us whether those viewers were returning or watching for the first time.
 
