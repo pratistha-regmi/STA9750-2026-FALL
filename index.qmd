@@ -42,7 +42,7 @@ text(
 
 ## My Mini-Projects
 
-This is where my STA 9750 projects will live. The pages are placeholders for now, and I’ll update them as I complete each project.
+This is where I share my STA 9750 projects. Mini-Project 1 explores Netflix viewing patterns, and I’ll add the remaining projects as I complete them.
 
 - [Mini-Project 1 →](./mp01.qmd)
 - [Mini-Project 2 →](./mp02.qmd)
