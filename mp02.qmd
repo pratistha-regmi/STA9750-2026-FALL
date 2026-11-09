@@ -182,7 +182,7 @@ EIA_SEP_REPORT <- map2(state.name, state.abb, get_eia_sep) |> list_rbind()
 
 ### Transit energy consumption
 
-The state electricity profiles tell me how much CO₂ is released when electricity is generated. The [2025 NTD service data](https://www.transit.dot.gov/ntd/ntd-data) tells me how much fuel and electricity transit agencies used for each mode, such as bus or rail.
+The state electricity profiles tell me how much CO₂ is released when electricity is generated. The [2025 NTD Energy Consumption report](https://www.transit.dot.gov/ntd/ntd-data) tells me how much fuel and electricity transit agencies used for each mode, such as bus or rail.
 
 The report measures most fuels in gallons, electricity in kilowatt-hours, and hydrogen in kilograms. Later, I estimate CO₂ emissions for the energy sources included in my analysis so I can compare them using a common measure.
 
