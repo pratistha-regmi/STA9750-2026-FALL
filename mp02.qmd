@@ -255,7 +255,7 @@ The import leaves out the “Other Fuel” category, so the emissions estimates 
 
 ### Transit service provided
 
-The energy data tell me how much fuel and electricity each agency used. The [2025 NTD service data](https://data.transportation.gov/resource/4fir-qbim.csv) help me put that use in context by showing how many times people boarded and how far they traveled.
+The energy data tell me how much fuel and electricity each agency used. The [2025 NTD service data](https://data.transportation.gov/d/4fir-qbim) help me put that use in context by showing how many times people boarded and how far they traveled.
 
 An unlinked passenger trip counts one boarding. If someone takes a bus and then transfers to a train, that counts as two boardings. Passenger miles add up the distance traveled by each passenger. I use both measures later to compare agencies that serve different numbers of riders and cover different distances.
 
